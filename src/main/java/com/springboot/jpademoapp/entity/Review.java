@@ -3,6 +3,7 @@ package com.springboot.jpademoapp.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Review {
@@ -15,12 +16,24 @@ public class Review {
 
     private String description;
 
+    // By default, for ManyToOne, fetching is eager fetching.
+    @ManyToOne
+    private Course course;
+
     protected Review() {
     }
 
     public Review(String rating, String description) {
         this.rating = rating;
         this.description = description;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public String getDescription() {
