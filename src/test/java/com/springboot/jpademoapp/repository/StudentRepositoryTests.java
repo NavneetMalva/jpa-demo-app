@@ -1,6 +1,7 @@
 package com.springboot.jpademoapp.repository;
 
 
+import com.springboot.jpademoapp.entity.Course;
 import com.springboot.jpademoapp.entity.Passport;
 import com.springboot.jpademoapp.entity.Student;
 import jakarta.persistence.EntityManager;
@@ -37,6 +38,22 @@ public class StudentRepositoryTests {
         logger.info("passport -> {}", passport);
         logger.info("student -> {}", passport.getStudent()); //Eventhough the fetch type is LAZY, this will work because this is child side.
 
+    }
+
+    @Test
+    @Transactional // By default, LAZY fetching for ManyToMany
+    public void retrieveStudentAndCourse(){
+        Student student = em.find(Student.class, 20001L);
+        logger.info("retrieveStudentAndCourse student  -> {}", student);
+        logger.info("retrieveStudentAndCourse courses  -> {}", student.getCourses());
+    }
+
+    @Test
+    @Transactional // By default, LAZY fetching for ManyToMany
+    public void retrieveCourseAndStudent(){
+        Course course = em.find(Course.class, 10001L);
+        logger.info("retrieveCourseAndStudent course -> {}", course);
+        logger.info("retrieveCourseAndStudent student -> {}", course.getStudents());
     }
 
 }

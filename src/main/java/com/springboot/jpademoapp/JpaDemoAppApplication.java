@@ -2,6 +2,7 @@ package com.springboot.jpademoapp;
 
 import com.springboot.jpademoapp.entity.Course;
 import com.springboot.jpademoapp.entity.Review;
+import com.springboot.jpademoapp.entity.Student;
 import com.springboot.jpademoapp.repository.CourseRepository;
 import com.springboot.jpademoapp.repository.StudentRepository;
 import org.slf4j.Logger;
@@ -50,6 +51,10 @@ public class JpaDemoAppApplication implements CommandLineRunner {
 		courseRepository.addReviewsForCourse(10003L, reviews);
 
 		courseRepository.addReviewDirectTodb();
+		logger.info("Running insertHardCodedStudentAndCourse...");
+		studentRepository.insertHardCodedStudentAndCourse();
 
+		logger.info("Running insertStudentAndCourse...");
+		studentRepository.insertStudentAndCourse(new Student("Morty"),new Course("Advanced SpringBoot"));
 	}
 }

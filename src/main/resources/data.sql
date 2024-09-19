@@ -21,3 +21,14 @@ values(50001,'5', 'Great Course',10001),
 
 -- Queries
 -- SELECT * FROM COURSE JOIN REVIEW ON COURSE.ID=REVIEW.COURSE_ID
+
+insert into student_course(student_id,course_id)
+values(20001,10001),
+      (20002,10001),
+      (20003,10001),
+      (20001,10003);
+
+-- for ManyToMany
+-- SELECT * FROM student_course,student,course
+-- WHERE student_course.student_id=student.id
+-- AND student_course.course_id=course.id

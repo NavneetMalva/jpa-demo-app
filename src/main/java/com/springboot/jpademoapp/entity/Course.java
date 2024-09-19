@@ -1,9 +1,6 @@
 package com.springboot.jpademoapp.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +17,10 @@ public class Course {
     // By default, for OneToMany have LAZY fetching.
     @OneToMany(mappedBy="course")
     private List<Review> reviews = new ArrayList<>();
+
+    // This will be child entity for the student entity.
+    @ManyToMany(mappedBy = "courses")
+    private List<Student> students = new ArrayList<>();
 
     public Course(String name) {
         this.name = name;
@@ -55,6 +56,14 @@ public class Course {
 
     public void removeReview(Review review) {
         this.reviews.remove(review);
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void addStudent(Student student) {
+        this.students.add(student);
     }
 
     @Override

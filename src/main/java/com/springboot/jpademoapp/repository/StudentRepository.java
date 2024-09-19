@@ -1,5 +1,6 @@
 package com.springboot.jpademoapp.repository;
 
+import com.springboot.jpademoapp.entity.Course;
 import com.springboot.jpademoapp.entity.Passport;
 import com.springboot.jpademoapp.entity.Student;
 import jakarta.persistence.EntityManager;
@@ -42,6 +43,23 @@ public class StudentRepository {
         student.setPassport(passport);
         em.persist(student);
 
+    }
+
+    public void insertHardCodedStudentAndCourse(){
+        Student student = new Student("Jack");
+        em.persist(student);
+        Course course = new Course("Microservices in 100 steps");
+        em.persist(course);
+        student.addCourse(course);
+        course.addStudent(student);
+        em.persist(student);
+    }
+
+    public void insertStudentAndCourse(Student student, Course course) {
+        student.addCourse(course);
+        course.addStudent(student);
+        em.persist(student);
+        em.persist(course);
     }
 
 }
