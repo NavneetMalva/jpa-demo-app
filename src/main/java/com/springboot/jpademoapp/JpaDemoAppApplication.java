@@ -1,9 +1,8 @@
 package com.springboot.jpademoapp;
 
-import com.springboot.jpademoapp.entity.Course;
-import com.springboot.jpademoapp.entity.Review;
-import com.springboot.jpademoapp.entity.Student;
+import com.springboot.jpademoapp.entity.*;
 import com.springboot.jpademoapp.repository.CourseRepository;
+import com.springboot.jpademoapp.repository.EmployeeRepository;
 import com.springboot.jpademoapp.repository.StudentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +23,9 @@ public class JpaDemoAppApplication implements CommandLineRunner {
 
 	@Autowired
 	private StudentRepository studentRepository;
+
+	@Autowired
+	private EmployeeRepository employeeRepository;
 
 	private final Logger logger = LoggerFactory.getLogger(JpaDemoAppApplication.class);
 
@@ -56,5 +59,10 @@ public class JpaDemoAppApplication implements CommandLineRunner {
 
 		logger.info("Running insertStudentAndCourse...");
 		studentRepository.insertStudentAndCourse(new Student("Morty"),new Course("Advanced SpringBoot"));
+
+		logger.info("Running EmployeeRepository....");
+		employeeRepository.insertEmployee(new PartTimeEmployee("Jill",new BigDecimal("50")));
+		employeeRepository.insertEmployee(new FullTimeEmployee("Rick",new BigDecimal("10000")));
+		logger.info("All Employees -> {}", employeeRepository.retrieveAllEmployees());
 	}
 }
