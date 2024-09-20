@@ -2,6 +2,7 @@ package com.springboot.jpademoapp.repository;
 
 
 import com.springboot.jpademoapp.entity.Course;
+import com.springboot.jpademoapp.entity.Student;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
@@ -42,5 +43,48 @@ public class JPQLTests {
         List resultList = query.getResultList();
         logger.info("select c from Course c with id -> {}" ,resultList);
     }
+
+    // select * from course where course.id not in (select course_id from student_course)
+    @Test
+    public void coursesWithoutStudents() {
+        TypedQuery<Course> query = em.createQuery("select c from Course c where c.students is empty", Course.class);
+        List<Course> resultList = query.getResultList();
+        logger.info("all courses without any students -> {}" ,resultList);
+    }
+
+    @Test
+    public void coursesWhereStudents() {
+        TypedQuery<Course> query = em.createQuery("select c from Course c where size( c.students)>=2 ", Course.class);
+        List<Course> resultList = query.getResultList();
+        logger.info("all courses with more than 2 students -> {}" ,resultList);
+    }
+
+    @Test
+    public void passportPattern() {
+        TypedQuery<Student> query = em.createQuery("select s from Student s where s.passport.number like '%1234%'  ", Student.class);
+        List<Student> resultList = query.getResultList();
+        logger.info("student with passport pattern -> {}" ,resultList);
+    }
+
+    @Test
+    public void join(){
+        Query query = em.createQuery("select c,s from Course c JOIN c.students s");
+        List<Object[]> resultList = query.getResultList();
+        logger.info("result size -> {}", resultList.size());
+        for(Object[] result: resultList){
+            logger.info("{} {}", result[0], result[1]);
+        }
+    }
+
+    @Test
+    public void leftJoin(){
+        Query query = em.createQuery("select c,s from Course c LEFT JOIN c.students s");
+        List<Object[]> resultList = query.getResultList();
+        logger.info("result size -> {}", resultList.size());
+        for(Object[] result: resultList){
+            logger.info("{} {}", result[0], result[1]);
+        }
+    }
+
 
 }
